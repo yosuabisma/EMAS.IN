@@ -12,25 +12,28 @@
     </p>
     <br/>
     <p class="whiteFont size25"><b>{{nominal}}</b></p>
-    <p class="whiteFont size14 msg">{{message}}</p>
+    <p class="whiteFont size14 msg">{{messageBerat}}</p>
   </div>
 </template>
 <script>
+  var nom = 678754;
+  var berat = 1.2
 	export default {
+
 		data() {
 			return {
-        nominal: "Rp 678.754",
-        message: "Jumlah Emas (1.2 gram)"
+        nominal: "Rp " + nom.toLocaleString('id-ID'),
+        messageBerat: "Jumlah Emas (" + berat+" gram)"
 			}
 		},
 		methods: {
       switchDisplay() {
-        if(this.nominal === "Rp 678.754" && this.message === "Jumlah Emas (1.2 gram)"){
-          this.nominal = "1.2 gram"
-          this.message = "Jumlah Saldo (Rp 678.754)"
+        if(this.nominal === "Rp 678.754" && this.messageBerat === "Jumlah Emas (1.2 gram)"){
+          this.nominal = berat + " gram"
+          this.messageBerat = "Jumlah Saldo (Rp "+nom.toLocaleString('id-ID')+")"
         }else{
-          this.nominal = "Rp 678.754"
-          this.message = "Jumlah Emas (1.2 gram)"
+          this.nominal = "Rp " + nom.toLocaleString('id-ID')
+          this.messageBerat = "Jumlah Emas (" + berat+" gram)"
         }
       }
 		}

@@ -46,28 +46,32 @@
 
     </div>
     <div class="total">
-      <font class="size20"><b>Total</b></font><span><font class="size20 colorOrange spanCornerRight"><b>Rp {{harga}}</b></font></span>
+      <font class="size20"><b>Total</b></font><span><font class="size20 colorOrange spanCornerRight"><b>Rp {{saldoFormat}}</b></font></span>
       <br/><p class="size12 grayFont spanCornerRight">{{gram}}</p>
       <br/><br/><br/>
       <p class="size12 grayFont">Dengan menggeser tombol dibawah. Anda sudah menyetujui <span class="colorOrange">syarat dan ketentuan</span> yang berlaku</p>
     </div>
-
-
   </div>
 </template>
 <script>
-  var rp = "15.611.342";
+  var rp = 15611342;
   var gr = 23;
+  var hargaPerGram = 678754;
   export default {
     data() {
       return {
-        harga: 678.754,
+        harga: hargaPerGram.toLocaleString('id-ID'),
         tanggal: "22 Mei 2018",
         waktu: "16:08",
-        rupiah: "Rp " + rp,
+        rupiah: "Rp " + rp.toLocaleString('id-ID'),
         gram: gr + " gram",
         normal: true
       }
+    },
+    computed:{
+      saldoFormat() {
+				return this.harga.toLocaleString('id-ID');
+			}
     },
 		methods: {
       switchDisplay() {
