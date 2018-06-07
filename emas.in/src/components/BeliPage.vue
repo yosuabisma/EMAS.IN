@@ -11,8 +11,8 @@
     </div>
     <div class="tabMenu">
       <center>
-        <button class="tab active"><font class="size16">Pembelian</font></button>
-        <span><button class="tab"><font class="size16">Penjualan</font></button></span>
+        <button class="tab active" v-on:click="gotoPage('/beli-emas')"><font class="size16">Pembelian</font></button>
+        <span><button class="tab" v-on:click="gotoPage('/jual-emas')"><font class="size16">Penjualan</font></button></span>
       </center>
       <div class="detail">
         <BoxBeli></BoxBeli>
@@ -120,6 +120,7 @@
   }
   .slideButton{
     padding: 16px 16px;
+    margin-top: -30px;
     margin-left: 16px;
     margin-right: 16px;
   }

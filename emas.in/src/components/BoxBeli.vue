@@ -23,15 +23,23 @@
             <tbody>
               <tr>
                 <td>
-                  <input v-if="normal===true" class="input" type="text" v-model="rupiah">
-                  <input v-if="normal===false" class="input" type="text" v-model="gram">
+                  <input v-if="normal===true" class="input" type="text" v-model="rp">
+                  <!--p style="display:none">{{rp}}</p-->
+                  <input v-if="normal===false" class="input" type="text" v-model="gr">
+                  <!--p style="display:none">{{gr}}</p-->
                 </td>
                 <td class="imgSwitch">
                   <img class="switchButton" src="../assets/Group 7.svg" alt="" v-on:click="switchDisplay()">
                 </td>
                 <td>
-                  <input v-if="normal===true" class="input" type="text" v-model="gram">
-                  <input v-if="normal===false" class="input" type="text" v-model="rupiah">
+                  <p v-if="normal===true" class="input">{{convert1}}</p>
+                  <!--p v-if="normal===true" class="input">{{rp/hpg}}</p-->
+                  <!--input v-if="normal===true" class="input" type="text" v-model="gr"-->
+                  <p style="display:none">{{gr}}</p>
+                  <p v-if="normal===false" class="input">{{convert2}}</p>
+                  <!--p v-if="normal===false" class="input">{{hpg*gr}}</p-->
+                  <!--input v-if="normal===false" class="input" type="text" v-model="rp"-->
+                  <p style="display:none">{{rp}}</p>
                 </td>
               </tr>
             </tbody>
@@ -39,46 +47,107 @@
         </center>
       </div>
       <div class="sliderDiv">
-        <center>
-          <input type="range">
-        </center>
+
+          <!--VUE SLIDE BAR-->
+          <div v-if="normal===true">
+            <VueSlideBar
+              v-model="rp"
+              :min="0"
+              :max="67875400"
+              :processStyle="slider.processStyle"
+              :lineHeight="slider.lineHeight"
+              :tooltipStyles="{ backgroundColor: '#fff', borderColor: '#fff', color : '#888888' }">
+            </VueSlideBar>
+            <br/>
+            <font class="size14 grayFont">Rp 0</font><span class="spanCornerRight"><font class="size14 grayFont">Rp 67.875.400</font></span>
+          </div>
+          <div v-if="normal===false">
+            <VueSlideBar
+              v-model="gr"
+              :min="0"
+              :max="100"
+              :processStyle="slider.processStyle"
+              :lineHeight="slider.lineHeight"
+              :tooltipStyles="{ backgroundColor: '#fff', borderColor: '#fff', color : '#888888' }">
+            </VueSlideBar>
+            <br/>
+            <font class="size14 grayFont">0 gram</font><span class="spanCornerRight"><font class="size14 grayFont">100 gram</font></span>
+          </div>
+          <!--h2>Value: {{value2}}</h2-->
+
       </div>
 
     </div>
     <div class="total">
-      <font class="size20"><b>Total</b></font><span><font class="size20 colorOrange spanCornerRight"><b>Rp {{saldoFormat}}</b></font></span>
-      <br/><p class="size12 grayFont spanCornerRight">{{gram}}</p>
-      <br/><br/><br/>
+      <font class="size20"><b>Total</b></font>
+      <span v-if="normal===true"><font class="size20 colorOrange spanCornerRight"><b>Rp {{rp}}</b></font></span>
+      <span v-if="normal===false"><font class="size20 colorOrange spanCornerRight"><b>Rp {{convert2}}</b></font></span>
+      <br/>
+      <p class="size12 grayFont spanCornerRight" v-if="normal===true">{{convert1}} gram</p>
+      <p class="size12 grayFont spanCornerRight" v-if="normal===false">{{gr}} gram</p>
+      <br/><br/>
       <p class="size12 grayFont">Dengan menggeser tombol dibawah. Anda sudah menyetujui <span class="colorOrange">syarat dan ketentuan</span> yang berlaku</p>
     </div>
   </div>
 </template>
 <script>
-  var rp = 15611342;
   var gr = 23;
   var hargaPerGram = 678754;
+  var rp = gr*hargaPerGram;
+  import VueSlideBar from 'vue-slide-bar'
   export default {
     data() {
       return {
-        harga: hargaPerGram.toLocaleString('id-ID'),
+        //harga: hargaPerGram.toLocaleString('id-ID'),
+        total: rp,
         tanggal: "22 Mei 2018",
         waktu: "16:08",
-        rupiah: "Rp " + rp.toLocaleString('id-ID'),
-        gram: gr + " gram",
-        normal: true
+        //rupiah: "Rp " + rp.toLocaleString('id-ID'),
+        //gram: gr + " gram",
+        normal: true,
+        rp:rp,
+        gr:gr,
+        hpg:hargaPerGram,
+        /*Slider Range*/
+        value2: rp,
+        slider: {
+          lineHeight: 10,
+          processStyle: {
+            backgroundColor: '#ffab00'
+          }
+        },
+        /*Slider Range*/
+        value3: gr,
+        slider: {
+          lineHeight: 10,
+          processStyle: {
+            backgroundColor: '#ffab00'
+          }
+        }
       }
+    },
+    components:{
+      VueSlideBar
     },
     computed:{
       saldoFormat() {
 				return this.harga.toLocaleString('id-ID');
-			}
+			},
+      convert1(){
+        return (this.rp/this.hpg).toFixed(1);
+      },
+      convert2(){
+        return (this.hpg*this.gr).toFixed(0);
+      }
     },
 		methods: {
       switchDisplay() {
         if(this.normal === true){
           this.normal = false;
+          this.gr=gr;
         }else{
           this.normal=true;
+          this.rp=rp;
         }
       }
 		}
@@ -156,14 +225,10 @@
 
 
   /*SLIDER*/
-  input[type=range] {
-      /*removes default webkit styles*/
+  /*input[type=range] {
       -webkit-appearance: none;
-
-      /*fix for FF unable to apply focus style bug */
       border: 1px solid white;
 
-      /*required for proper track sizing in FF*/
       width: 250px;
   }
   input[type=range]::-webkit-slider-runnable-track {
@@ -209,5 +274,5 @@
   }
   input[type=range]:focus::-webkit-fill-upper {
       background: #ccc;
-  }
+  }*/
 </style>
