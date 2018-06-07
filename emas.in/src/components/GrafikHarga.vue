@@ -111,7 +111,8 @@ export default {
 }
 
 .chart {
-  height: 150px !important;
+  height: 200px !important;
+  width: 250px !important;
 }
 
 .grafik {

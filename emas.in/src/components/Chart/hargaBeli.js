@@ -12,6 +12,20 @@ export default {
           data: [100000, 150000, 200000, 300000, 350000, 400000, 450000]
         }
       ]
-    }, {responsive: true, maintainAspectRatio: false})
+    }, {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [{
+          display: true,
+          ticks: {
+              beginAtZero: true,
+              max: 600000,
+              min: 0,
+              stepSize: 100000
+          }
+        }]
+      }
+    })
   }
 }
