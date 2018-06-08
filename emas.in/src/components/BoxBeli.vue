@@ -98,7 +98,7 @@
   export default {
     data() {
       return {
-        //harga: hargaPerGram.toLocaleString('id-ID'),
+        harga: hargaPerGram.toLocaleString('id-ID'),
         total: rp,
         tanggal: "22 Mei 2018",
         waktu: "16:08",

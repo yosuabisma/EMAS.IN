@@ -98,7 +98,7 @@
   export default {
     data() {
       return {
-        //harga: hargaPerGram.toLocaleString('id-ID'),
+        harga: hargaPerGram.toLocaleString('id-ID'),
         total: rp,
         tanggal: "22 Mei 2018",
         waktu: "16:08",
@@ -130,8 +130,8 @@
       VueSlideBar
     },
     computed:{
-      saldoFormat() {
-				return this.harga.toLocaleString('id-ID');
+      saldoFormat(rupiah) {
+				return rupiah.toLocaleString('id-ID');
 			},
       convert1(){
         return (this.rp/this.hpg).toFixed(1);
