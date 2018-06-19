@@ -50,31 +50,35 @@
 
           <!--VUE SLIDE BAR-->
           <div v-if="normal===true">
-            <VueSlideBar
-              v-model="rp"
-              :min="0"
-              :max="67875400"
-              :processStyle="slider.processStyle"
-              :lineHeight="slider.lineHeight"
-              :tooltipStyles="{ backgroundColor: '#fff', borderColor: '#fff', color : '#888888' }">
-            </VueSlideBar>
+            <vue-slider v-model="rp"
+            :value="rp"
+            :min="0"
+            :max="67875400"
+            :dotSize="20"
+            :width="auto"
+            :height="4"
+            :tooltipStyle="{ backgroundColor: '#fff', borderColor: '#fff', color : '#888888' }"
+            :sliderStyle="{backgroundColor:'#ffffff', border: '5px solid #ffab00'}"
+            :processStyle="{backgroundColor:'#ffab00'}"
+            ></vue-slider>
             <br/>
             <font class="size14 grayFont">Rp 0</font><span class="spanCornerRight"><font class="size14 grayFont">Rp 67.875.400</font></span>
           </div>
           <div v-if="normal===false">
-            <VueSlideBar
-              v-model="gr"
-              :min="0"
-              :max="100"
-              :processStyle="slider.processStyle"
-              :lineHeight="slider.lineHeight"
-              :tooltipStyles="{ backgroundColor: '#fff', borderColor: '#fff', color : '#888888' }">
-            </VueSlideBar>
+            <vue-slider v-model="gr"
+            :value="gr"
+            :min="0"
+            :max="100"
+            :dotSize="20"
+            :width="auto"
+            :height="4"
+            :tooltipStyle="{ backgroundColor: '#fff', borderColor: '#fff', color : '#888888' }"
+            :sliderStyle="{backgroundColor:'#ffffff', border: '5px solid #ffab00'}"
+            :processStyle="{backgroundColor:'#ffab00'}"
+            ></vue-slider>
             <br/>
             <font class="size14 grayFont">0 gram</font><span class="spanCornerRight"><font class="size14 grayFont">100 gram</font></span>
           </div>
-          <!--h2>Value: {{value2}}</h2-->
-
       </div>
 
     </div>
@@ -94,44 +98,26 @@
   var gr = 23;
   var hargaPerGram = 678754;
   var rp = gr*hargaPerGram;
-  import VueSlideBar from 'vue-slide-bar'
+  import vueSlider from 'vue-slider-component';
+  //import VueSlideBar from 'vue-slide-bar'
   export default {
     data() {
       return {
         harga: hargaPerGram.toLocaleString('id-ID'),
-        total: rp,
         tanggal: "22 Mei 2018",
         waktu: "16:08",
-        //rupiah: "Rp " + rp.toLocaleString('id-ID'),
-        //gram: gr + " gram",
         normal: false,
         rp:rp,
         gr:gr,
         hpg:hargaPerGram,
-        /*Slider Range*/
-        value2: rp,
-        slider: {
-          lineHeight: 10,
-          processStyle: {
-            backgroundColor: '#ffab00'
-          }
-        },
-        /*Slider Range*/
-        value3: gr,
-        slider: {
-          lineHeight: 10,
-          processStyle: {
-            backgroundColor: '#ffab00'
-          }
-        }
       }
     },
     components:{
-      VueSlideBar
+      vueSlider
     },
     computed:{
-      saldoFormat(rupiah) {
-				return rupiah.toLocaleString('id-ID');
+      saldoFormat() {
+				return this.rp.toLocaleString('id-ID');
 			},
       convert1(){
         return (this.rp/this.hpg).toFixed(1);
@@ -221,5 +207,9 @@
     margin-top: 28px;
     margin-left: 16px;
     margin-right: 16px;
+  }
+
+  .sliderDiv{
+    margin-top: 40px;
   }
 </style>
